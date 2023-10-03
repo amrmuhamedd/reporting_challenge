@@ -1,4 +1,5 @@
 const knex = require('./db')
+const { throwNewError, sendErrorResponse } = require('./utils/errorHandler')
 
 module.exports = {
   getHealth,
@@ -21,17 +22,19 @@ async function getStudent (req, res, next) {
  try {
   const {id} = req.params
 
-  if(!id || id === ':id') return res.status(400).json({message : "Valid id is required"})
-
+  if(!id || id === ':id') {
+    throwNewError(400, "Valid id is required")
+  }
+  
   const student = await knex('students').where({id}).first();
 
   if (!student) {
-    return res.status(404).json({message : "student not found"})
+    throwNewError(404, "student not found")
   }
 
-  res.status(200).json(student)
- } catch (error) {
-  
+  return res.status(200).json(student).end()
+ } catch (e) {
+  sendErrorResponse(e, req, res, next)
  }
 }
 
