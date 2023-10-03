@@ -22,13 +22,13 @@ async function getHealth (req, res, next) {
 
 async function getStudentById (id) {
   if(!id || id === ':id') {
-    throwNewError(400, "Valid id is required")
+  return  throwNewError(400, "Valid id is required")
   }
 
   const student = await knex('students').where({id}).first();
   
   if (!student) {
-    throwNewError(404, "student not found")
+    return  throwNewError(404, "student not found")
   }
 
   return student
@@ -49,15 +49,18 @@ async function getStudent (req, res, next) {
 async function getStudentGradesReport (req, res, next) {
 try {
   const {id} = req.params
+  console.log({id})
   const student = await getStudentById(id);
-
-const gradeData = await getGradeData()
+  console.log({student})
+  const gradeData = await getGradeData()
   const grades = gradeData
-  .filter(grade => grade.id === parseInt(id))
+  .filter(grade => grade?.id === parseInt(id))
   .map(({course, grade}) => ({course , grade}))
 
-  if(!grades.length) {
-    throwNewError(404 , 'Grades not found for the student')
+  if(grades.length ===  0) {
+    return res
+        .status(404)
+        .json({ message: 'Grades not found for the student.', student })
   }
 
   return res.status(200).json({student , grades})

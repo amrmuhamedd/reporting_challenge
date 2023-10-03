@@ -103,7 +103,18 @@ tape('get grades report for student with id 1' , async function(t) {
       greadeForStudent1,
       'should have gradesForStudent1 data'
       )
-      t.end()
+    t.end()
+  } catch (e) {
+    t.error(e)
+  }
+})
+
+tape('get grades report for student with not exist id', async function (t) {
+  const url = `${endpoint}/student/9999999999/grades`
+  try {
+    const { response } = await jsonist.get(url)
+    t.equal(response.statusCode, 404, 'should have status code 404')
+    t.end()
   } catch (e) {
     t.error(e)
   }
