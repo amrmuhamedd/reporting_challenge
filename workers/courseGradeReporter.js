@@ -1,7 +1,6 @@
 const { parentPort, workerData } = require('worker_threads')
 
 function calculateGradeReportForAllCourse (data) {
-          console.log(data)
   try {
     const formattedData = data.reduce((acc, { id, course, grade }) => {
       acc[course] = acc[course] || {
