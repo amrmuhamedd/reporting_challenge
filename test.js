@@ -24,6 +24,25 @@ const studentWithId1 = {
   ip_address: "2.137.18.155"
 }
 
+const greadeForStudent1 = [ 
+{
+  "course": "Calculus",
+  "grade": 50
+},
+{
+  "course": "Microeconomics",
+  "grade": 43
+},
+{
+  "course": "Statistics",
+  "grade": 50
+},
+{
+  "course": "Astronomy",
+  "grade": 63
+}
+]
+
 tape('health', async function (t) {
   const url = `${endpoint}/health`
   try {
@@ -68,6 +87,23 @@ tape('get student with id 1', async function(t) {
     t.equal(data.id , 1, 'should have id 1')
     t.deepEquals(data , studentWithId1 , 'should have same data for student with id 1')
     t.end()
+  } catch (e) {
+    t.error(e)
+  }
+})
+
+tape('get grades report for student with id 1' , async function(t) {
+  const url = `${endpoint}/student/1/grades`
+  try {
+    const {data , response} = await jsonist.get(url)
+    t.equal(response.statusCode , 200 , 'should return status code 200')
+    t.deepEqual(data.student , studentWithId1 , 'shuold have sudent 1 data')
+    t.deepEqual(
+      data.grades,
+      greadeForStudent1,
+      'should have gradesForStudent1 data'
+      )
+      t.end()
   } catch (e) {
     t.error(e)
   }
