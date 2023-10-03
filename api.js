@@ -1,4 +1,4 @@
-const { getGradeData } = require('./data/cachHandler')
+const { getGradeData, getCourseGradesReportData } = require('./data/cachHandler')
 const knex = require('./db')
 const { throwNewError, sendErrorResponse } = require('./utils/errorHandler')
 
@@ -72,7 +72,7 @@ async function getStudentGradesReport (req, res, next) {
 try {
   const {id} = req.params
   const student = await getStudentById(id);
-  
+
   const gradeData = await getGradeData()
   const grades = gradeData
   .filter(grade => grade?.id === parseInt(id))
@@ -91,5 +91,10 @@ try {
 }
 
 async function getCourseGradesReport (req, res, next) {
-  throw new Error('This method has not been implemented yet.')
+  try {
+    const report = await getCourseGradesReportData()
+    return res.status(200).json(report) 
+  } catch (e) {
+    sendErrorResponse(e, req, res, next)
+  }
 }

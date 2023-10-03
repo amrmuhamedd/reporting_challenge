@@ -5,10 +5,10 @@ module.exports = {
   runWorker,
 };
 
-function runWorker(filename, data) {
+function runWorker(filename, workerData) {
   return new Promise((resolve, reject) => {
     const worker = new Worker(path.resolve(__dirname, filename), {
-      workerData: data,
+      workerData
     });
 
     worker.on("message", (message) => {
