@@ -13,7 +13,6 @@ const studentWithId1 = {
   email: "Scotty79@hotmail.com",
   is_registered: 1,
   is_approved: 1,
-  password_hash: "657907e1fd8e48e2be2aa59031ff8e0f0ecf8694",
   address: "241 Denesik Knolls Apt. 955",
   city: "Buffalo",
   state: "ME",

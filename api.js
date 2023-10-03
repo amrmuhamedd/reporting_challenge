@@ -24,12 +24,34 @@ async function getStudentById (id) {
   if(!id || id === ':id') {
   return  throwNewError(400, "Valid id is required")
   }
+  const keysToInclude = [
+    'id',
+    'first_name',
+    'last_name',
+    'email',
+    'is_registered',
+    'is_approved',
+    'address',
+    'city',
+    'state',
+    'zip',
+    'phone',
+    'created',
+    'last_login',
+    'ip_address'
+  ]
 
-  const student = await knex('students').where({id}).first();
-  
+  const student = await knex('students').select().where({id}).first();
+
   if (!student) {
     return  throwNewError(404, "student not found")
   }
+
+  Object.keys(student).forEach((key) => {
+    if (!keysToInclude.includes(key)) {
+      delete student[key]
+    }
+  })
 
   return student
 }
@@ -49,9 +71,8 @@ async function getStudent (req, res, next) {
 async function getStudentGradesReport (req, res, next) {
 try {
   const {id} = req.params
-  console.log({id})
   const student = await getStudentById(id);
-  console.log({student})
+  
   const gradeData = await getGradeData()
   const grades = gradeData
   .filter(grade => grade?.id === parseInt(id))
@@ -65,7 +86,7 @@ try {
 
   return res.status(200).json({student , grades})
 } catch (e) {
-  
+  sendErrorResponse(e, req, res, next)
 }
 }
 
