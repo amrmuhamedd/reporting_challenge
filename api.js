@@ -20,41 +20,7 @@ async function getHealth (req, res, next) {
   }
 }
 
-async function getStudentById (id) {
-  if(!id || id === ':id') {
-  return  throwNewError(400, "Valid id is required")
-  }
-  const keysToInclude = [
-    'id',
-    'first_name',
-    'last_name',
-    'email',
-    'is_registered',
-    'is_approved',
-    'address',
-    'city',
-    'state',
-    'zip',
-    'phone',
-    'created',
-    'last_login',
-    'ip_address'
-  ]
 
-  const student = await knex('students').select().where({id}).first();
-
-  if (!student) {
-    return  throwNewError(404, "student not found")
-  }
-
-  Object.keys(student).forEach((key) => {
-    if (!keysToInclude.includes(key)) {
-      delete student[key]
-    }
-  })
-
-  return student
-}
 
 async function getStudent (req, res, next) {
  try {
@@ -97,4 +63,41 @@ async function getCourseGradesReport (req, res, next) {
   } catch (e) {
     sendErrorResponse(e, req, res, next)
   }
+}
+
+
+async function getStudentById (id) {
+  if(!id || id === ':id') {
+  return  throwNewError(400, "Valid id is required")
+  }
+  const keysToInclude = [
+    'id',
+    'first_name',
+    'last_name',
+    'email',
+    'is_registered',
+    'is_approved',
+    'address',
+    'city',
+    'state',
+    'zip',
+    'phone',
+    'created',
+    'last_login',
+    'ip_address'
+  ]
+
+  const student = await knex('students').select().where({id}).first();
+
+  if (!student) {
+    return  throwNewError(404, "student not found")
+  }
+
+  Object.keys(student).forEach((key) => {
+    if (!keysToInclude.includes(key)) {
+      delete student[key]
+    }
+  })
+
+  return student
 }

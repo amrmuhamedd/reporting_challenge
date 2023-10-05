@@ -17,14 +17,6 @@ async function loadStaticFiles() {
   if (doseFileExist(gradeDataPath)) {
     gradesCache = require(gradeDataPath);
   }
-
-  const courseGradeReportPath = path.resolve(
-    __dirname,
-    "./staticData/coursesReport.json"
-  );
-  if (doseFileExist(courseGradeReportPath)) {
-    courseGradeReport = require(courseGradeReportPath);
-  }
 }
 
 function doseFileExist(filePath) {

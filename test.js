@@ -43,36 +43,38 @@ const greadeForStudent1 = [
 ]
 
 const allCourseSummary = {
-  Calculus: {
-    highest: 100,
-    lowest: 0,
-    average: 50.092707476891704,
-    count: 40137
-  },
-  Microeconomics: {
-    highest: 100,
-    lowest: 0,
-    average: 49.81138092966018,
-    count: 39821
-  },
-  Statistics: {
-    highest: 100,
-    lowest: 0,
-    average: 50.017376820961566,
-    count: 40226
-  },
-  Astronomy: {
-    highest: 100,
-    lowest: 0,
-    average: 50.03889013536774,
-    count: 40113
-  },
-  Philosophy: {
-    highest: 100,
-    lowest: 0,
-    average: 50.016063556894785,
-    count: 40153
-  }
+  courseGradesReport: [
+      {
+          course: "Calculus",
+          highestGrade: 100,
+          lowestGrade: 0,
+          averageGrade: 50.09270747689165
+      },
+      {
+          course: "Microeconomics",
+          highestGrade: 100,
+          lowestGrade: 0,
+          averageGrade: 49.81138092966023
+      },
+      {
+          course: "Statistics",
+          highestGrade: 100,
+          lowestGrade: 0,
+          averageGrade: 50.017376820961566
+      },
+      {
+          course: "Astronomy",
+          highestGrade: 100,
+          lowestGrade: 0,
+          averageGrade: 50.03889013536759
+      },
+      {
+          course: "Philosophy",
+          highestGrade: 100,
+          lowestGrade: 0,
+          averageGrade: 50.01606355689488
+      }
+  ]
 }
 
 tape('health', async function (t) {
